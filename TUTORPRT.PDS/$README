@@ -1,0 +1,21 @@
+ Function:  Extract the ISPF tutorial text into a file
+            for use.
+
+ Installation: Copy into a library in your SYSEXEC or SYSPROC allocations
+
+ Syntax:    %tutorprt dsname starting-panel opt
+
+            If the starting panel ends with an * then
+            all members in the dsname starting with the
+            panel prefix will be processed.
+
+            if opt is:
+                 blank - no-cc and view results
+                 A generate with ASA CC
+                 P generate with ASA CC and call txt2pdf
+                 R generate with ASA CC and call txt2rtf
+                 H generate with ASA CC and call txt2html
+
+  Dependencies: if using any of the TXT2xxx options then the TXT2xxx
+                command is required. See CBT file 314 for them or get
+                them from www.lbdsoftware.com.
