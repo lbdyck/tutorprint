@@ -23,6 +23,8 @@
  | Author:    Lionel B. Dyck                                  |
  |                                                            |
  | History:  (most recent on top)                             |
+ |            04/15/20 LBD - Enhance if multiples on same line|
+ |            03/14/20 LBD - bug fix caused blank lines       |
  |            02/26/20 LBD - Creation                         |
  |                                                            |
  * ---------------------------------------------------------- */
@@ -198,6 +200,7 @@ read:
     end
     if hit = 0 then iterate
     if hit = 2 then do
+      if area /= null then
       if left(d,1) = area then iterate
       if word(d,1) = ')AREA' then iterate
       if pos('===>',d) > 0 then iterate
@@ -207,13 +210,15 @@ read:
       if ccopt /= null then text.tc = ' 'text.tc
     end
     if hit = 1 then do
-      if word(d,1) = '&ZSEL' then iterate
-      if pos(',',d) > 0 then parse value d with x','pan .
+      do forever
+      if pos(',',d) > 0 then parse value d with x','pan d
+      else leave
       if x = '*' then iterate
       if left(pan,1) = '*' then pan = substr(pan,2)
       pan = translate(pan)
       if wordpos(pan,order) = 0 then
       order =  order pan
+      end
       if pos('&ZCONT',d) > 0 then parse value d with x '=' next .
     end
     if hit = 3 then do
